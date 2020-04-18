@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     borderRadius: 10,
     overflow: 'hidden',
-    padding: 10
+    padding: 10,
+    marginVertical: 10
   },
   mealHeader: {
     height: "85%"
