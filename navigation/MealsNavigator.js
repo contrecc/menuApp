@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -18,6 +18,12 @@ import Colors from "../constants/Colors";
 const defaultStackNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : ""
+  },
+  headerTitleStyle: {
+    fontFamily: 'open-sans-bold'
+  },
+  headerBackTitleStyle: {
+    fontFamily: 'open-sans'
   },
   headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor
 };
@@ -51,23 +57,26 @@ const tabScreenConfig = {
       tabBarIcon: (tabInfo) => {
         return <Ionicons name="ios-restaurant" size={25} color={tabInfo.tintColor} />;
       },
-      tabBarColor: Colors.primaryColor
+      tabBarColor: Colors.primaryColor,
+      tabBarLabel: Platform.OS === "android" ? <Text style={{ fontFamily: 'open-sans-bold' }} >Meals</Text> : "Meals"
     }
   },
   Favorites: {
     screen: FavNavigator, navigationOptions: {
-      tabBarLabel: "Favorites!",
+      tabBarLabel: "Favorites",
       tabBarIcon: (tabInfo) => {
         return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
       },
-      tabBarColor: Colors.secondaryColor
+      tabBarColor: Colors.secondaryColor,
+      tabBarLabel: Platform.OS === "android" ? <Text style={{ fontFamily: 'open-sans-bold' }} >Favorites</Text> : "Favorites"
+
     }
   }
 };
 
 const MealsFavTabNavigator = Platform.OS === 'android' ? createMaterialBottomTabNavigator(tabScreenConfig, {
   activeColor: 'white', shifting: true
-}) : createBottomTabNavigator(tabScreenConfig, { tabBarOptions: { activeTintColor: Colors.secondaryColor } });
+}) : createBottomTabNavigator(tabScreenConfig, { tabBarOptions: { labelStyle: { fontFamily: 'open-sans-bold' }, activeTintColor: Colors.secondaryColor } });
 
 const MainNavigator = createDrawerNavigator({
   MealsFavs: { screen: MealsFavTabNavigator, navigationOptions: { drawerLabel: "Meals" } },
@@ -75,7 +84,7 @@ const MainNavigator = createDrawerNavigator({
 }, {
   contentOptions: {
     activeTintColor: Colors.secondaryColor,
-    labelStyle: { fontFamily: 'open-sans-bold' }
+    labelStyle: { fontFamily: 'open-sans-bold', fontSize: 20 }
   }
 });
 
