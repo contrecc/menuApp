@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { LogBox, Text, View } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import MealsNavigator from "./navigation/MealsNavigator";
@@ -7,15 +7,18 @@ import { enableScreens } from "react-native-screens";
 import { createStore, combineReducers } from "redux";
 import mealsReducer from "./store/reducers/meals";
 import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 // Use native screens for better performance
 enableScreens();
+
+LogBox.ignoreAllLogs();
 
 const rootReducer = combineReducers({
   meals: mealsReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 const fetchFonts = () => {
   return Font.loadAsync({
